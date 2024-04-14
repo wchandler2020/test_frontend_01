@@ -51,6 +51,8 @@ export default function UserReports() {
   const [loading, setLoading] = useState(true)
   const [tableauData, setTableauData] = useState([]);
   const [comparisonData, setComparisonData] = useState([])
+  const [claimVolumeData, setClaimVolumeData] = useState([])
+  const [payerMixData, setPayerMixData] = useState([])
 
   
 const url = "http://localhost:8000/api/tableau-data/";
@@ -68,8 +70,16 @@ useEffect(() => {
             Authorization: `Bearer ${accessToken}`,
           },
         });
+        const chartData = data.chart_data_results
+
+        const comparisonDataObj = JSON.parse(chartData[0])
+        const claimVolumeDataObj = JSON.parse(chartData[4])
+        const payerMixDataObj = JSON.parse(chartData[3])
+
         setTableauData(data.client_data);
-        setComparisonData(data.chart_data_results[0])
+        setComparisonData(comparisonDataObj)
+        setClaimVolumeData(claimVolumeDataObj)
+        setPayerMixData(payerMixDataObj)
         setLoading(false)
       } catch (e) {
         console.log(e);
@@ -137,9 +147,9 @@ useEffect(() => {
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
         {/* Conditionally render MonthlyCost component */}
-        {/* {claimVolumeData && <ClaimVolumes chartData={claimVolumeData}/>} */}
+        {claimVolumeData && <ClaimVolumes chartData={claimVolumeData}/>}
         {/* Conditionally render PayerMix component */}
-        {/* {payerMixData && <PayerMix chartData={payerMixData} />} */}
+        {payerMixData && <PayerMix chartData={payerMixData} />}
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
         {/* Conditionally render MonthlyCost component */}

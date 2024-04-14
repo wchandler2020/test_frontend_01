@@ -4,16 +4,13 @@ import React from "react";
 import { Box, Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
 // Custom components
 import Card from "components/card/Card.js";
-import {
-  barChartDataDailyTraffic,
-  barChartOptionsDailyTraffic,
-} from "variables/charts";
-
 // Assets
 import { RiArrowUpSFill } from "react-icons/ri";
 import PayerMixChart from "components/charts/PayerMixChart"; 
 
+
 export default function PayerMix(props) {
+  console.log(props.chartsData)
   const { ...rest } = props;
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");

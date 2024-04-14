@@ -48,7 +48,7 @@ export default function ArBuckets(props) {
         </Flex>
       </Flex>
       <Box h='240px' mt='auto'>
-        {/* <ArBucketsChart chartData={props.chartData} /> */}
+        <ArBucketsChart chartData={props.chartData} />
       </Box>
     </Card>
   );
