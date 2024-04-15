@@ -53,6 +53,9 @@ export default function UserReports() {
   const [comparisonData, setComparisonData] = useState([])
   const [claimVolumeData, setClaimVolumeData] = useState([])
   const [payerMixData, setPayerMixData] = useState([])
+  const [netCollectionData, setNetCollectionData] = useState([])
+  const [revenueOutcomeData, setRevenueOutcomeData] = useState([])
+  
 
   
 const url = "http://localhost:8000/api/tableau-data/";
@@ -71,15 +74,19 @@ useEffect(() => {
           },
         });
         const chartData = data.chart_data_results
-
         const comparisonDataObj = JSON.parse(chartData[0])
-        const claimVolumeDataObj = JSON.parse(chartData[4])
-        const payerMixDataObj = JSON.parse(chartData[3])
-
+        const revenueOutcomeObj = JSON.parse(chartData[1])
+        const netCollectionsObj = JSON.parse(chartData[2])
+        const payerMixDataObj = JSON.parse(chartData[4])
+        const claimVolumeDataObj = JSON.parse(chartData[5])
+        
+      
         setTableauData(data.client_data);
         setComparisonData(comparisonDataObj)
         setClaimVolumeData(claimVolumeDataObj)
         setPayerMixData(payerMixDataObj)
+        setNetCollectionData(netCollectionsObj)
+        setRevenueOutcomeData(revenueOutcomeObj)
         setLoading(false)
       } catch (e) {
         console.log(e);
@@ -88,8 +95,8 @@ useEffect(() => {
   }
 }, []);
 
-
-
+  console.log('it this working????')
+  console.log('IS THIS IS IT: ', revenueOutcomeData)
   // Chakra Color Mode
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
@@ -105,19 +112,18 @@ useEffect(() => {
         
           {
             tableauData.map((tabItem, i) => {
+             console.log(tabItem)
               const statName1 = Object.keys(tabItem[0])[1];
               
               const statValue1 = Object.values(tabItem[0])[2]['0'];
               
               const statName2 = Object.keys(tabItem[1])[0];
               const statValue2 = Object.values(tabItem[1])[1]['0'];
-              console.log(statValue2)
+              
               
               const statName3 = Object.keys(tabItem[2])[0];
               const statValue3 = Object.values(tabItem[2])[2]['0'];
-              const intVal = statName1
-              console.log('val: ', intVal)
-              
+              const intVal = Object.values(tabItem[0])[1]['0'];
               return (
                 <MiniStatistics
                 keys={i}
@@ -126,9 +132,9 @@ useEffect(() => {
                     w='56px'
                     h='56px'
                     bg={boxBg}
-                    // icon={
-                    //   // <Icon w='32px' h='32px' as={negVal==='Negative' ? MdArrowDownward : MdArrowUpward} color={negVal === 'Negative' ? '#f70025': '#5C8F22'} />
-                    // }
+                    icon={
+                      <Icon w='32px' h='32px' as={intVal==='Negative' ? MdArrowDownward : MdArrowUpward} color={ intVal=== 'Negative' ? '#f70025': '#5C8F22'} />
+                    }
                   />
                 }
                 name={formatClientData(statName1)}
@@ -153,10 +159,9 @@ useEffect(() => {
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
         {/* Conditionally render MonthlyCost component */}
-        {/* {netCollectionData && <NetCollection chartData={netCollectionData}/>}
-        {revenueOutcomeData && <RevenueOutcome chartData={revenueOutcomeData}/>} */}
+        {netCollectionData && <NetCollection chartData={netCollectionData}/>}
+        {revenueOutcomeData && <RevenueOutcome chartData={revenueOutcomeData}/>} 
       </SimpleGrid>
-
     </Box>
   );
 }

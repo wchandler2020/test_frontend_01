@@ -8,8 +8,6 @@ const RevenueOutcomeChart = (props) => {
 
   const netCollectionMonths = Object.values(data['Month of Date'])
   const netCollectionValues = Object.values(data['Measure Values'])
-  console.log('MONTHS rev outcome: ', netCollectionMonths);
-  console.log('VALS: rev outcome: ', netCollectionValues)
 
   const combinedStrings = [];
 
