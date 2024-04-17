@@ -36,7 +36,7 @@ export default function MeetTheTeam() {
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
         <div class="mx-auto mb-8 max-w-screen-sm lg:mb-16">
-          <h2 class="mb-4 text-5xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+          <h2 class="mb-4 text-5xl tracking-tight font-extrabold dark:text-white team-header">
             Meet The Jorie Team
           </h2>
           <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">
@@ -57,7 +57,7 @@ export default function MeetTheTeam() {
                   src={member.image}
                   alt="Bonnie Avatar"
                 />
-                <h3 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                <h3 class="mb-1 text-2xl font-bold tracking-tight member-name dark:text-white">
                   <a href="#">{member.name}</a>
                 </h3>
                 <p>{member.position}</p>

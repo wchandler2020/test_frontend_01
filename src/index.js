@@ -18,9 +18,7 @@ ReactDOM.render(
 	<ChakraProvider theme={theme}>
 		<React.StrictMode>
 			<ThemeEditorProvider>
-				<UserProvider>
-					<RoutesComponent/>
-				</UserProvider>
+				<RoutesComponent/>
 			</ThemeEditorProvider>
 		</React.StrictMode>
 	</ChakraProvider>,

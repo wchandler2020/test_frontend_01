@@ -9,7 +9,6 @@ import ArBucketsChart from "components/charts/ArBucketsChart";
 
 export default function ArBuckets(props) {
   const { ...rest } = props;
-  console.log('props 1', props.chartData)
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");
   return (

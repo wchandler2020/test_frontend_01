@@ -31,7 +31,7 @@ import {
 
 import MiniStatistics from "components/card/MiniStatistics";
 import IconBox from "components/icons/IconBox";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState,useContext} from "react";
 import {
   MdArrowUpward,
   MdArrowDownward
@@ -46,6 +46,8 @@ import ClaimVolumes from "./components/ClaimVolumes";
 import '../../../interceptors/axios'
 import Loading from "../loading/Loading";
 import RevenueOutcome from "./components/RevenueOutcomes";
+import api from "api";
+import { UserContext } from "contexts/UserContext";
 
 export default function UserReports() {
   const [loading, setLoading] = useState(true)
@@ -55,24 +57,31 @@ export default function UserReports() {
   const [payerMixData, setPayerMixData] = useState([])
   const [netCollectionData, setNetCollectionData] = useState([])
   const [revenueOutcomeData, setRevenueOutcomeData] = useState([])
-  
+  const [requesting, setRequesting] = useState(false)
+   const {activeClient} = useContext(UserContext)
 
   
 const url = "http://localhost:8000/api/tableau-data/";
 
 useEffect(() => {
+
+  setLoading(true)
+  console.log('client changed')
   const accessToken = localStorage.getItem("access_token");
   if (accessToken === null) {
     window.location.href = "/login";
   } else {
     (async () => {
       try {
-        const { data } = await axios.get(url, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        if(requesting){
+          console.log('requesting...')
+          return;
+        }
+        
+        setRequesting(true)
+        console.log('triggerRequest')
+        console.log('activeClient',activeClient)
+        const { data } = await api.getTableauData(activeClient)
         const chartData = data.chart_data_results
         const comparisonDataObj = JSON.parse(chartData[0])
         const revenueOutcomeObj = JSON.parse(chartData[1])
@@ -80,7 +89,7 @@ useEffect(() => {
         const payerMixDataObj = JSON.parse(chartData[4])
         const claimVolumeDataObj = JSON.parse(chartData[5])
         
-      
+        
         setTableauData(data.client_data);
         setComparisonData(comparisonDataObj)
         setClaimVolumeData(claimVolumeDataObj)
@@ -88,12 +97,16 @@ useEffect(() => {
         setNetCollectionData(netCollectionsObj)
         setRevenueOutcomeData(revenueOutcomeObj)
         setLoading(false)
+        setRequesting(false)
+        console.log('requesting should be false')
       } catch (e) {
         console.log(e);
       }
     })();
   }
-}, []);
+}, [activeClient]);
+
+
 
   console.log('it this working????')
   console.log('IS THIS IS IT: ', revenueOutcomeData)

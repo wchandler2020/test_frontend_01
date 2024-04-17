@@ -1,6 +1,8 @@
 import { createContext, useEffect, useState, useMemo} from "react";
 import axios from "axios";
 import "interceptors/axios"
+import api from "../api";
+
 
 export const UserContext = createContext();
 
@@ -24,6 +26,26 @@ const UserProvider = ( {children}) =>{
     const [loginError, setLoginError] = useState(false)
     const [loading,setLoading] = useState(true)
     const [isAuth, setAuth] = useState(false)
+    const [clients, setClients] =useState([])
+    const [activeClient, setActiveClient] = useState(null)
+
+
+    const loadClients =  async () => {
+      const clients = (await api.getClients()).data
+      setClients(clients)
+      if(!activeClient){
+        setActiveClient(clients[0].name)
+      }
+    }
+
+    const selectClient = async(client_name) => {
+      console.log('clientName', client_name)
+      if(clients.filter( client => client.name==client_name).length){
+        console.log('client exists', client_name)
+        return setActiveClient(client_name)
+      }
+      console.log('client does not exists')
+    }
 
     const login = async (email, password) => {
       setLoginError(false)
@@ -45,6 +67,7 @@ const UserProvider = ( {children}) =>{
         axios.defaults.headers.common["Authorization"] = `Bearer ${data.access}`;
         
         setAuth(true)
+        loadClients()
         return true
       }catch (e){
         console.log(e.response.data.detail)
@@ -124,6 +147,7 @@ const UserProvider = ( {children}) =>{
             if(!isVerified){
               setVerified(await IsAlreadyVerified())
             }
+            await loadClients()
           }
           setLoading(false)
        }
@@ -136,7 +160,10 @@ const UserProvider = ( {children}) =>{
         isVerified,
         isAuth,
         setAuth,
-        login
+        login,
+        clients,
+        activeClient,
+        selectClient
 
     }} >
         {loading && 'loading'}

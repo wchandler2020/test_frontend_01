@@ -6,16 +6,18 @@ import {
   MdHome,
   MdOutlineGroups
 } from "react-icons/md";
+import { TbBrandGoogleAnalytics } from "react-icons/tb";
 
 // Admin Imports
 import MainDashboard from "views/admin/default";
 import Profile from "views/profile/Profile";
+import About from "views/admin/about/About";
 import DataTables from "views/admin/dataTables";
 import AdminLayout from 'layouts/admin';
 import RtlLayout from 'layouts/rtl';
 import Login from 'layouts/login/Login';
 import Mfa from 'layouts/mfa';
-import {UserContext } from 'contexts/UserContext';
+import UserProvider, {UserContext } from 'contexts/UserContext';
 import {  Route, Switch, BrowserRouter, Redirect} from 'react-router-dom';
 
 
@@ -37,11 +39,11 @@ const routes = [
     component: DataTables,
   },
   {
-    name: "Profile",
+    name: "Get To Know Jorie",
     layout: "/admin",
-    path: "/profile",
-    icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
-    component: Profile,
+    path: "/about",
+    icon: <Icon as={TbBrandGoogleAnalytics} width='20px' height='20px' color='inherit' />,
+    component: About,
   }  
 ];
 
@@ -65,6 +67,8 @@ function VerifiedRoute({ children,  ...rest }) {
 export const RoutesComponent  = () =>{
     return (
     <BrowserRouter>
+    	<UserProvider>
+
       <Switch>
         <Route path={`/login`} component={Login} />
           
@@ -82,6 +86,8 @@ export const RoutesComponent  = () =>{
         
         
       </Switch>
+      </UserProvider>
+
     </BrowserRouter>
     )
 }

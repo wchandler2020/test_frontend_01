@@ -14,10 +14,12 @@ import React, { useState, useEffect, useContext } from "react";
 import AdminNavbarLinks from "components/navbar/NavbarLinksAdmin";
 import axios from "axios";
 import { UserContext } from "contexts/UserContext";
+import api from "api";
 
 export default function AdminNavbar(props) {
   const [scrolled, setScrolled] = useState(false);
   const [userData, setUserData] = useState([]);
+  const { activeClient} = useContext(UserContext)
 
   useEffect(() => {
     window.addEventListener("scroll", changeNavbar);
@@ -27,9 +29,6 @@ export default function AdminNavbar(props) {
     };
   });
 
-  // const url = "https://wchandler60610.pythonanywhere.com/api/dashboard/";
-  const url = "http://localhost:8000/api/dashboard/";
-
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     
@@ -37,13 +36,8 @@ export default function AdminNavbar(props) {
       window.location.href = "/login";
     } else {
       (async () => {
-        try {
-          const { data } = await axios.get(url, {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
-            },
-          });
+        try{
+          const {data } = await api.getDashboard(activeClient);
 
           setUserData(data);
         } catch (e) {
@@ -164,7 +158,7 @@ export default function AdminNavbar(props) {
               boxShadow: "none",
             }}
           >
-            {userData.client_name}
+            {activeClient || userData.client_name}
           </Link>
         </Box>
         <Box ms="auto" w={{ sm: "100%", md: "unset" }}>
