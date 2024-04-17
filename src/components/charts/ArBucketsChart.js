@@ -19,9 +19,9 @@ const ArBucketsChart = (props) => {
   return roundedArray
   }
   
-  const arMeasureNums_1 = refactoredNumbers(arMeasureValues).slice(0, 5)
+  const arMeasureNums_1 = refactoredNumbers(arMeasureValues).slice(0, arMeasureValues.length/2)
   const arMeasureNums_2 = refactoredNumbers(arMeasureValues).slice(5, arMeasureValues.length)
-
+  const arNames = arMeasureNames.splice(0, arMeasureNames.length/2)
   const series = [
     {
       name: '',
