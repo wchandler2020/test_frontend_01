@@ -37,7 +37,6 @@ import {
   MdArrowDownward
 } from "react-icons/md";
 import ArBuckets from "views/admin/default/components/ArBuckets";
-import axios from "axios";
 import { formatClientData, formatNumber } from "client_utility";
 import '../../../interceptors/axios'
 import PayerMix from "./components/PayerMix";
@@ -58,10 +57,10 @@ export default function UserReports() {
   const [netCollectionData, setNetCollectionData] = useState([])
   const [revenueOutcomeData, setRevenueOutcomeData] = useState([])
   const [requesting, setRequesting] = useState(false)
-   const {activeClient} = useContext(UserContext)
+  const {activeClient} = useContext(UserContext)
 
   
-const url = "http://localhost:8000/api/tableau-data/";
+// const url = "http://localhost:8000/api/tableau-data/";
 
 useEffect(() => {
 
@@ -105,11 +104,6 @@ useEffect(() => {
     })();
   }
 }, [activeClient]);
-
-
-
-  console.log('it this working????')
-  console.log('IS THIS IS IT: ', revenueOutcomeData)
   // Chakra Color Mode
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");

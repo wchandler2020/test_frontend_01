@@ -40,6 +40,7 @@ const textColor = useColorModeValue("secondaryGray.900", "white");
         <Hero />
         <Services />
         <Why />
+        <Gallary />
       </Card>
     </Box>
   );

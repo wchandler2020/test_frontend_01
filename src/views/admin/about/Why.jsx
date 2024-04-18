@@ -37,7 +37,7 @@ const whyData = [
 const Why = () => {
   return (
     <>
-      <div className="bg-[#98dbc6] dark:text-white py-10 pb-14 rounded-md shadow-lg">
+      <div className="d dark:text-white py-10 pb-14 rounded-md shadow-lg">
         <section data-aos="fade-up" className="container ">
           <h1 className="my-8 border-l-8 border-primary/50 py-2 pl-2 text-3xl font-semibold">
             Our Blogs

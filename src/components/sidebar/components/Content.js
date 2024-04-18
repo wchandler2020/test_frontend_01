@@ -4,9 +4,11 @@ import { Box, Flex, Stack } from "@chakra-ui/react";
 //   Custom components
 import Brand from "components/sidebar/components/Brand";
 import Links from "components/sidebar/components/Links";
-import SidebarCard from "components/sidebar/components/SidebarCard";
 import { Select } from "@chakra-ui/react";
 import { UserContext } from "contexts/UserContext";
+import { ImFacebook } from "react-icons/im";
+import { BsInstagram } from "react-icons/bs";
+import { FaTwitter, FaLinkedinIn } from "react-icons/fa6";
 
 // FUNCTIONS
 
@@ -28,7 +30,7 @@ function SidebarContent(props) {
       borderRadius="30px"
     >
       <Brand />
-      <Stack direction="column" mb="auto" mt="8px">
+      <Stack direction="column" mb="auto" mt="8px" height='90%' display='flex' alignContent='center'>
         <Box ps="20px" pe={{ md: "16px", "2xl": "1px" }}>
           <Links routes={routes} />
         </Box>
@@ -44,6 +46,18 @@ function SidebarContent(props) {
               ))}
             </Select>
           )}
+        </Box>
+        <Box height='100%' width='100%' display='flex' alignItems='flex-end' justifyContent='center'>
+              <Box marginBottom='1.5rem' display='flex' justifyContent='center' alignItems='center' flexDirection='column' width='45%'> 
+                  <h3 className='font-light text-base'>Find Jorie AI On</h3>
+                  <div style={{width: '70%', borderBottom: '1px solid #888888', marginBottom: '12px', opacity: '.3'}}></div>
+                  <Box display='flex' justifyContent='space-between' width='100%'>
+                      <a href=""><ImFacebook size={20} /></a>
+                      <a href=""><BsInstagram size={20} /></a>
+                      <a href=""><FaTwitter size={20} /></a>
+                      <a href=""><FaLinkedinIn size={20} /></a>
+                  </Box>
+              </Box>
         </Box>
       </Stack>
     </Flex>
